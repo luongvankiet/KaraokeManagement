@@ -76,12 +76,13 @@ public class MenuController {
 		String now = df.format(date);
 		menu.setCreated_at(now);
 		menu.setUpdated_at(now);
+		menu.setStatus(1);
 		Menu newMenu = menuService.save(menu);
 		if(newMenu == null) {
 			Message<Menu> message = new Message<Menu>("Something went wrong");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message); 
 		}
-		Message<Menu> mess = new Message<Menu>("Create new role successful", newMenu);
+		Message<Menu> mess = new Message<Menu>("Create new menu successful", newMenu);
 		return ResponseEntity.ok(mess);
 	}
 	
@@ -108,7 +109,7 @@ public class MenuController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message); 
 		}
 		
-		Message<Menu> message = new Message<Menu>("Update customer successful", editMenu);
+		Message<Menu> message = new Message<Menu>("Update menu successful", editMenu);
 		return ResponseEntity.ok(message);
 	}
 	
@@ -116,11 +117,11 @@ public class MenuController {
 	public ResponseEntity<Message<Menu>> delete(@PathVariable int id) {
 		Optional<Menu> menu = menuService.findById(id);
 		if (!menu.isPresent()) {
-			Message<Menu> mess = new Message<Menu>("Customer not found");
+			Message<Menu> mess = new Message<Menu>("Menu not found");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mess);
 		}
 		menuService.delete(id);
-		Message<Menu> mess = new Message<Menu>("Delete customer successful", menu.get());
+		Message<Menu> mess = new Message<Menu>("Delete menu successful", menu.get());
 		return ResponseEntity.ok(mess);
 	}
 }
